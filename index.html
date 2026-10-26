@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>30 Hari Ramadhan</title>
+
+<!-- PWA & Meta Tags -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<meta name="theme-color" id="metaThemeColor" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Memanggil File CSS Terpisah -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Confetti Library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <button class="theme-toggle" id="themeBtn" type="button">
+      <span id="themeIcon">☀️</span><span id="themeLabel">Light</span>
+    </button>
+  </div>
+  
+  <header>
+    <h1>Ramadhan.</h1>
+    <p class="sub" id="headerSub">Membersihkan Hati & Meraih Berkah</p>
+  </header>
+  
+  <!-- TAB 1: JURNAL 30 HARI -->
+  <main class="tab-section active" id="tab-jurnal">
+    <div class="card">
+      <div class="progress-row">
+        <span id="progressText">0 dari 30 selesai</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <progress id="progress" max="30" value="0"></progress>
+      
+      <div class="days" id="days"></div>
+      
+      <section aria-live="polite">
+        <div class="eyebrow" id="dayLabel">PUASA HARI 01</div>
+        <h2 id="title"></h2>
+        <div id="desc"></div>
+        
+        <div class="extras-container">
+          <div class="extra-box">
+            <div class="extra-title">📖 Target Al-Qur'an</div>
+            <div class="extra-content" id="quranTarget"></div>
+          </div>
+          <div class="extra-box">
+            <div class="extra-title">🤲 Tips Doa Harian</div>
+            <div class="extra-content" id="doaTarget"></div>
+          </div>
+          <div class="extra-box">
+            <div class="extra-title">📿 Shalawat Harian</div>
+            <div class="extra-content" id="shalawatTarget"></div>
+          </div>
+          <div class="extra-box">
+            <div class="extra-title">🎯 Tindakan Nyata</div>
+            <div class="extra-content" id="actionTarget"></div>
+          </div>
+        </div>
+      </section>
+      
+      <div class="actions">
+        <button class="btn primary" id="markBtn" style="width: 100%;">Tandai Selesai</button>
+        <div class="actions-row">
+          <button class="btn" id="copyMotivasiBtn">Salin Motivasi</button>
+          <button class="btn" id="copyDoaBtn">Salin Doa</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- TAB 2: JADWAL SHOLAT (DENGAN DROPDOWN API) -->
+  <main class="tab-section" id="tab-jadwal">
+    
+    <!-- Kotak Pengaturan Lokasi -->
+    <div class="card" style="margin-bottom: 16px;">
+      <h3 style="margin-top: 0; margin-bottom: 16px; font-size: 1.1rem; color: var(--accent);">📍 Atur Lokasi Jadwal</h3>
+      
+      <!-- Dropdown Provinsi -->
+      <select class="search-bar" id="provinsiSelect" style="margin-bottom: 12px; appearance: auto; cursor: pointer;">
+        <option value="">Memuat Provinsi...</option>
+      </select>
+      
+      <!-- Dropdown Kota -->
+      <select class="search-bar" id="kotaSelect" style="margin-bottom: 16px; appearance: auto; cursor: pointer;">
+        <option value="">Pilih Provinsi Dahulu</option>
+      </select>
+      
+      <button class="btn primary" id="saveLocationBtn" style="width: 100%;">Simpan & Cari Jadwal</button>
+    </div>
+
+    <!-- Hasil Jadwal -->
+    <div class="card">
+      <div class="api-status" id="jadwalDate">Memuat jadwal...</div>
+      <div class="jadwal-list" id="jadwalList">
+        <div class="center-loader">Menghubungkan ke API...</div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- BOTTOM NAVIGATION BAR (2 Menu) -->
+<nav class="bottom-nav">
+  <div class="nav-item active" onclick="switchTab('jurnal', this)" style="width: 50%;">
+    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v-2H6.5a.5.5 0 0 0 0 1H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13zM6.5 15A1.5 1.5 0 0 0 5 16.5v-10A1.5 1.5 0 0 1 6.5 5H18v10H6.5z"/></svg>
+    <span class="nav-label">Jurnal</span>
+  </div>
+  <div class="nav-item" onclick="switchTab('jadwal', this)" style="width: 50%;">
+    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm1-13h-2v6l5.25 3.15.75-1.23-4-2.37V7z"/></svg>
+    <span class="nav-label">Jadwal</span>
+  </div>
+</nav>
+
+<!-- Memanggil File Data dan Script Terpisah -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
